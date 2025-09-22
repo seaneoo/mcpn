@@ -33,7 +33,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     kotlin { compilerOptions { jvmTarget = JvmTarget.JVM_11 } }
-    buildFeatures { compose = true }
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+
+    defaultConfig { buildConfigField("String", "REPO", "\"https://github.com/seaneoo/mcpn\"") }
 }
 
 dependencies {

@@ -1,5 +1,6 @@
 package dev.seano.mcpn.network
 
+import dev.seano.mcpn.data.model.Version
 import dev.seano.mcpn.data.model.VersionManifest
 
 class ApiService(private val networkService: NetworkService) {
@@ -10,4 +11,7 @@ class ApiService(private val networkService: NetworkService) {
 
     suspend fun fetchVersionManifest() =
         networkService.get<VersionManifest>(Endpoints.VERSION_MANIFEST)
+
+    suspend fun fetchVersion(version: VersionManifest.Version) =
+        networkService.get<Version>(version.url)
 }

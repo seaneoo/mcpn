@@ -2,7 +2,9 @@ package dev.seano.mcpn.network
 
 import dev.seano.mcpn.data.model.Version
 import dev.seano.mcpn.data.model.VersionManifest
+import org.koin.core.annotation.Single
 
+@Single
 class ApiService(private val networkService: NetworkService) {
     private object Endpoints {
         const val VERSION_MANIFEST =

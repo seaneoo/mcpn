@@ -16,7 +16,9 @@ import io.ktor.http.isSuccess
 import io.ktor.http.userAgent
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.core.annotation.Single
 
+@Single
 class NetworkService {
     private val jsonConfig = Json {
         ignoreUnknownKeys = true

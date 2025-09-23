@@ -17,7 +17,7 @@ fun App(appState: AppState = rememberAppState()) {
         Scaffold { padding ->
             Column(
                 modifier = Modifier.fillMaxSize().padding(padding).consumeWindowInsets(padding)) {
-                    AppNavHost(appState, Destination.Home)
+                    AppNavHost(appState, Destination.VersionList)
                 }
         }
     }

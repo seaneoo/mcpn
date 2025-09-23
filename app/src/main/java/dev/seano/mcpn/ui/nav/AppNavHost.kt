@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import dev.seano.mcpn.ui.AppState
-import dev.seano.mcpn.ui.screens.HomeScreen
+import dev.seano.mcpn.ui.screens.VersionListScreen
 
 @Composable
 fun AppNavHost(appState: AppState, startDestination: Destination, modifier: Modifier = Modifier) {
@@ -13,6 +13,6 @@ fun AppNavHost(appState: AppState, startDestination: Destination, modifier: Modi
         navController = appState.navHostController,
         startDestination = startDestination,
         modifier = modifier) {
-            composable<Destination.Home> { HomeScreen() }
+            composable<Destination.VersionList> { VersionListScreen() }
         }
 }

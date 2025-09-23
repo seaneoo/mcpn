@@ -1,15 +1,28 @@
 package dev.seano.mcpn.ui.screens
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.seano.mcpn.data.model.VersionManifest
+import dev.seano.mcpn.data.model.VersionManifestVersion
 import dev.seano.mcpn.network.NetworkResponse
 import dev.seano.mcpn.ui.viewmodel.VersionListViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -21,21 +34,52 @@ fun VersionListScreen() {
 
     LaunchedEffect(Unit) { viewModel.loadData() }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally) {
-            when (val response = state.value.versionManifestResponse) {
-                is NetworkResponse.Failure -> {
-                    Text(response.error.localizedMessage ?: "Unknown error")
-                }
-                is NetworkResponse.Loading -> {
-                    CircularProgressIndicator()
-                }
-                is NetworkResponse.Success -> {
-                    Text("Latest release: ${response.data.latest.release}")
-                    Text("Latest snapshot: ${response.data.latest.snapshot}")
-                }
+    Box(modifier = Modifier.fillMaxSize()) {
+        when (val response = state.value.versionManifestResponse) {
+            is NetworkResponse.Failure -> {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(response.error.localizedMessage ?: "Unknown error")
+                    }
             }
+            is NetworkResponse.Loading -> {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally) {
+                        CircularProgressIndicator()
+                    }
+            }
+            is NetworkResponse.Success -> {
+                VersionList(response.data)
+            }
+        }
+    }
+}
+
+@Composable
+internal fun VersionList(versionManifest: VersionManifest) {
+    LazyColumn {
+        itemsIndexed(versionManifest.versions) { index, version ->
+            VersionListItem(version)
+            if (index < versionManifest.versions.size) HorizontalDivider()
+        }
+    }
+}
+
+@Composable
+internal fun VersionListItem(version: VersionManifestVersion) {
+    Column(
+        modifier =
+            Modifier.fillMaxWidth()
+                .clickable(
+                    onClick = { /* TODO */ },
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = ripple())
+                .padding(16.dp)) {
+            Text("${version.id} - ${version.type}")
+            Text(version.releaseTime)
         }
 }

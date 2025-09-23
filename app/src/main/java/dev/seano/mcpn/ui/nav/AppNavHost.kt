@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import dev.seano.mcpn.ui.AppState
-import dev.seano.mcpn.ui.screens.VersionListScreen
+import dev.seano.mcpn.ui.screen.VersionListScreen
 
 @Composable
 fun AppNavHost(appState: AppState, startDestination: Destination, modifier: Modifier = Modifier) {

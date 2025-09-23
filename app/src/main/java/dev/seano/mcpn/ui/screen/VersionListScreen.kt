@@ -1,4 +1,4 @@
-package dev.seano.mcpn.ui.screens
+package dev.seano.mcpn.ui.screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

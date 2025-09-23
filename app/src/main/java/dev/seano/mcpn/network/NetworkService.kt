@@ -5,6 +5,7 @@ import dev.seano.mcpn.BuildConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.ResponseException
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
@@ -47,13 +48,16 @@ class NetworkService {
     internal suspend inline fun <reified T> get(
         urlString: String,
         block: HttpRequestBuilder.() -> Unit = {}
-    ): T? {
+    ): NetworkResponse<T> {
         return try {
             val response = httpClient.get(urlString, block)
-            if (!response.status.isSuccess()) null
-            response.body<T>()
-        } catch (_: Exception) {
-            null
+            if (!response.status.isSuccess()) {
+                val e = ResponseException(response, "Unsuccessful HTTP response")
+                NetworkResponse.Failure<ResponseException>(e)
+            }
+            NetworkResponse.Success(response.body<T>())
+        } catch (e: Exception) {
+            NetworkResponse.Failure(e)
         }
     }
 }

@@ -11,9 +11,9 @@ class ApiService(private val networkService: NetworkService) {
             "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"
     }
 
-    suspend fun fetchVersionManifest() =
+    suspend fun fetchVersionManifest(): NetworkResponse<VersionManifest> =
         networkService.get<VersionManifest>(Endpoints.VERSION_MANIFEST)
 
-    suspend fun fetchVersion(version: VersionManifest.Version) =
+    suspend fun fetchVersion(version: VersionManifest.Version): NetworkResponse<Version> =
         networkService.get<Version>(version.url)
 }

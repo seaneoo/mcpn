@@ -61,10 +61,11 @@ fun VersionListScreen() {
 
 @Composable
 internal fun VersionList(versionManifest: VersionManifest) {
+    val versions = versionManifest.versions
     LazyColumn {
-        itemsIndexed(versionManifest.versions) { index, version ->
+        itemsIndexed(versions) { index, version ->
             VersionListItem(version)
-            if (index < versionManifest.versions.size) HorizontalDivider()
+            if (index < versions.size) HorizontalDivider()
         }
     }
 }

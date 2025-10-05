@@ -25,6 +25,7 @@ import dev.seano.mcpn.data.model.VersionManifest
 import dev.seano.mcpn.data.model.VersionManifestVersion
 import dev.seano.mcpn.network.NetworkResponse
 import dev.seano.mcpn.ui.viewmodel.VersionListViewModel
+import dev.seano.mcpn.util.DateUtils
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -81,6 +82,6 @@ internal fun VersionListItem(version: VersionManifestVersion) {
                     indication = ripple())
                 .padding(16.dp)) {
             Text("${version.id} - ${version.type}")
-            Text(version.releaseTime)
+            Text(DateUtils.formatDateTimeWithZone(version.releaseTime))
         }
 }

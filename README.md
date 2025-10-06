@@ -10,7 +10,12 @@ a registered trademark of Microsoft Corporation. No infringement is intended.
 For more, please refer to
 the [Minecraft Usage Guidelines](https://www.minecraft.net/en-us/usage-guidelines).
 
-## License
+## App License
 
 All code in this repository is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0),
 unless specified within the source file.
+
+## Third-Party Licenses
+
+Use of the [Monocraft font](https://github.com/IdreesInc/Monocraft) is licensed under the SIL Open
+Font License Version 1.1.

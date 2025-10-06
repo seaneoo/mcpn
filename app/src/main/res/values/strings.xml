@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MCPN</string>
+    <string name="releases">Releases</string>
+    <string name="snapshots">Snapshots</string>
+    <string name="old_betas">Old Betas</string>
+    <string name="old_alphas">Old Alphas</string>
 </resources>

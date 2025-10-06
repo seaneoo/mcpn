@@ -14,7 +14,8 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class VersionListViewModel(private val apiService: ApiService) : ViewModel() {
     data class UiState(
-        val versionManifestResponse: NetworkResponse<VersionManifest> = NetworkResponse.Loading()
+        val versionManifestResponse: NetworkResponse<VersionManifest> = NetworkResponse.Loading(),
+        val versionFilters: Set<VersionFilter> = setOf(VersionFilter.RELEASE)
     )
 
     private val _uiState = MutableStateFlow(UiState())
@@ -28,5 +29,17 @@ class VersionListViewModel(private val apiService: ApiService) : ViewModel() {
 
     fun loadData() {
         viewModelScope.launch { fetchData() }
+    }
+
+    fun toggleFilter(filter: VersionFilter) {
+        _uiState.update { currentState ->
+            val newFilters = currentState.versionFilters.toMutableSet()
+            if (newFilters.contains(filter)) {
+                newFilters.remove(filter)
+            } else {
+                newFilters.add(filter)
+            }
+            currentState.copy(versionFilters = newFilters)
+        }
     }
 }

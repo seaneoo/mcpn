@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -32,6 +34,7 @@ import org.koin.androidx.compose.koinViewModel
 fun VersionListScreen() {
     val viewModel = koinViewModel<VersionListViewModel>()
     val state = viewModel.uiState.collectAsStateWithLifecycle()
+    val lazyListState = rememberLazyListState()
 
     LaunchedEffect(Unit) { viewModel.loadData() }
 
@@ -54,16 +57,17 @@ fun VersionListScreen() {
                     }
             }
             is NetworkResponse.Success -> {
-                VersionList(response.data)
+                VersionList(response.data, lazyListState)
             }
         }
     }
 }
 
 @Composable
-internal fun VersionList(versionManifest: VersionManifest) {
+internal fun VersionList(versionManifest: VersionManifest, lazyListState: LazyListState) {
     val versions = versionManifest.versions
-    LazyColumn {
+
+    LazyColumn(state = lazyListState) {
         itemsIndexed(versions) { index, version ->
             VersionListItem(version)
             if (index < versions.size) HorizontalDivider()

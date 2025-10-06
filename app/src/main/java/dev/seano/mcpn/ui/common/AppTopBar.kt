@@ -9,13 +9,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import dev.seano.mcpn.R
+import dev.seano.mcpn.ui.theme.monocraft
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppTopBar() {
     TopAppBar(
         title = {
-            Text(stringResource(R.string.app_name), maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(
+                stringResource(R.string.app_name),
+                fontFamily = monocraft,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis)
         },
         colors =
             TopAppBarDefaults.topAppBarColors(
